@@ -1,0 +1,29 @@
+{
+  "properties": [
+    {
+      "name": "app.security.jwt.key",
+      "type": "java.lang.String",
+      "description": "Description for app.security.jwt.key."
+    },
+    {
+      "name": "app.security.jwt.tokenTTL",
+      "type": "java.lang.String",
+      "description": "Description for app.security.jwt.tokenTTL."
+    },
+    {
+      "name": "app.security.jwt.rememberMeTTL",
+      "type": "java.lang.String",
+      "description": "Description for app.security.jwt.rememberMeTTL."
+    },
+    {
+      "name": "app.security.jwt.authorizationHeader",
+      "type": "java.lang.String",
+      "description": "Description for app.security.jwt.authorizationHeader."
+    },
+    {
+      "name": "app.security.jwt.tokenPrefix",
+      "type": "java.lang.String",
+      "description": "Description for app.security.jwt.tokenPrefix."
+    }
+  ]
+}
