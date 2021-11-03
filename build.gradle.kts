@@ -43,12 +43,15 @@ dependencies {
 
 	// Argon 2 JVM
 	// https://mvnrepository.com/artifact/de.mkammerer/argon2-jvm
-	implementation("de.mkammerer:argon2-jvm:2.1")
+	implementation("de.mkammerer:argon2-jvm:2.11")
 
 	// JWT
 	implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
 	implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
 	implementation("io.jsonwebtoken:jjwt-api:0.11.2")
+
+	// MocKK/SpringMocKK
+	testImplementation("com.ninja-squad:springmockk:3.0.1")
 
 }
 
