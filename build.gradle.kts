@@ -1,11 +1,16 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "2.5.6"
-	id("io.spring.dependency-management") version "1.0.11.RELEASE"
-	kotlin("jvm") version "1.5.31"
-	kotlin("plugin.spring") version "1.5.31"
-	kotlin("plugin.jpa") version "1.5.31"
+	val kotlinVersion = "1.5.31"
+	val springBootVersion = "2.5.6"
+	val depManVer = "1.0.11.RELEASE"
+
+	id("org.springframework.boot") version springBootVersion apply true
+	id("io.spring.dependency-management") version depManVer apply true
+	kotlin("jvm") version kotlinVersion apply true
+	kotlin("plugin.spring") version kotlinVersion apply true
+	kotlin("plugin.jpa") version kotlinVersion apply true
+	kotlin("kapt") version kotlinVersion apply true
 }
 
 group = "com.caveman"
@@ -41,17 +46,19 @@ dependencies {
 	// Swagger
 	implementation("io.springfox:springfox-boot-starter:3.0.0")
 
-	// Argon 2 JVM
-	// https://mvnrepository.com/artifact/de.mkammerer/argon2-jvm
-	implementation("de.mkammerer:argon2-jvm:2.11")
-
 	// JWT
 	implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
 	implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
 	implementation("io.jsonwebtoken:jjwt-api:0.11.2")
 
+	// Kapt annotation processor
+	kapt("org.springframework.boot:spring-boot-configuration-processor")
+
 	// MocKK/SpringMocKK
 	testImplementation("com.ninja-squad:springmockk:3.0.1")
+
+	// For Argon 2
+	implementation("org.bouncycastle:bcpkix-jdk15on:1.69")
 
 }
 

@@ -12,3 +12,13 @@ data class SecurityEnvironmentConfig(
     val authorizationHeader: String,
     val tokenPrefix: String
 )
+
+@ConstructorBinding
+@ConfigurationProperties(value = "app.security.argon2")
+data class Argon2SecurityEnvironmentConfig(
+    val saltLength: Int,
+    val hashLength: Int,
+    val parallelism: Int,
+    val memory: Int,
+    val iterations: Int
+)
