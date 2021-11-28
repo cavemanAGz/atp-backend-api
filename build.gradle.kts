@@ -37,6 +37,8 @@ dependencies {
 	implementation("org.flywaydb:flyway-core:8.0.2")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.junit.jupiter:junit-jupiter:5.7.0")
+	implementation("org.junit.jupiter:junit-jupiter:5.7.0")
 	developmentOnly("org.springframework.boot:spring-boot-devtools:2.5.6")
 	runtimeOnly("org.postgresql:postgresql:42.3.1")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:2.5.6")

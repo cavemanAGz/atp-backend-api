@@ -26,7 +26,7 @@ internal class StatusControllerTest {
 //    private lateinit var statusController: StatusController
 
     @Test
-    fun `Should respond with message if running`() {
+    fun `Should respond with message if running NO_AUTH`() {
 
         // TODO: This is a different way of accessing the context
 //        val expected = "I AM ALIIIIIVVVVVVEEEEEE!"
@@ -46,6 +46,11 @@ internal class StatusControllerTest {
     @Test
     fun `Security should not allow this`() {
         mockMvc.perform(get("/status/")).andExpect(status().is4xxClientError)
+    }
+
+    @Test
+    fun `Hit protected End Point with Valid Creds`() {
+
     }
 
 }

@@ -1,9 +1,12 @@
 package com.caveman.atpbackendapi.configuration
 
+import RestHeaderAuthFilter
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -14,21 +17,44 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-class SecurityConfig() : WebSecurityConfigurerAdapter() {
+class SecurityConfig(
+    @Value("\${app.security.argon2.saltLength}")
+    private val saltLength: Int,
+    @Value("\${app.security.argon2.hashLength}")
+    private val hashLength: Int,
+    @Value("\${app.security.argon2.parallelism}")
+    private val parallelism: Int,
+    @Value("\${app.security.argon2.memory}")
+    private val memory: Int,
+    @Value("\${app.security.argon2.iterations}")
+    private val iterations: Int,
+) : WebSecurityConfigurerAdapter() {
 
     companion object {
-        val logger: Logger = LoggerFactory.getLogger(this::class.java)
+        val localLogger: Logger = LoggerFactory.getLogger(this::class.java)
     }
 
     @Bean
-    fun argon2PasswordEncoder() = Argon2PasswordEncoder()
+    fun argon2PasswordEncoder() = Argon2PasswordEncoder(saltLength,hashLength,parallelism,memory,iterations)
 
-    override fun configure(http: HttpSecurity?): Unit {
-        http!!
+    fun restHeaderAuthFilter(authManager: AuthenticationManager): RestHeaderAuthFilter {
+        val filter = RestHeaderAuthFilter("/**")
+        filter.setAuthenticationManager(authManager)
+        return filter
+    }
+
+    override fun configure(http: HttpSecurity?) {
+        http!!.addFilterBefore(
+            restHeaderAuthFilter(authenticationManager()),
+            UsernamePasswordAuthenticationFilter::class.java
+        )
+//            .csrf()
+//            .disable()
             .authorizeRequests { authorize ->
                 authorize.antMatchers(
 //                    "/",
